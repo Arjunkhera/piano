@@ -14,11 +14,14 @@ UPLOAD=1
 [[ "${2:-}" == "--no-upload" ]] && UPLOAD=0
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-BUILD="$ROOT/build"
+# Build outside the repo. A repo under ~/Desktop can sync to iCloud, and iCloud
+# adds file attributes that make codesign fail ("detritus not allowed").
+CACHE="$HOME/Library/Caches/piano-build"
+BUILD="$CACHE/$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$BUILD"
 
 echo "== PianoCore tests"
-swift test --package-path "$ROOT/PianoCore"
+swift test --package-path "$ROOT/PianoCore" --scratch-path "$CACHE/spm"
 
 echo "== Xcode project"
 (cd "$ROOT/App" && xcodegen generate)
@@ -29,6 +32,7 @@ xcodebuild archive \
   -scheme Piano \
   -destination "generic/platform=iOS" \
   -archivePath "$BUILD/Piano.xcarchive" \
+  -derivedDataPath "$CACHE/DerivedData" \
   -allowProvisioningUpdates \
   DEVELOPMENT_TEAM="$TEAM_ID" \
   | tail -n 20
