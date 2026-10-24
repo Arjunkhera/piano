@@ -5,3 +5,14 @@ xcuserdata/
 DerivedData/
 build/
 *.ipa
+
+# Song files never go in this public repo (copyright). Tests use made-up data
+# written inside the test code.
+*.mid
+*.midi
+*.musicxml
+*.mxl
+*.wav
+*.mp3
+*.m4a
+*.aiff
