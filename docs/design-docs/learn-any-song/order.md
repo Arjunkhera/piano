@@ -21,8 +21,9 @@ part: order
 1. D1, Keyboard link. It comes first, because it is the cheapest test of the
    whole idea. The app shows each key you press, by name, on screen. It
    waits on your keyboard model and the cable.
-2. D2, Song in. It starts at the same time as D1. It is a Decide design:
-   where the notes come from. It waits on your answer to the first question.
+2. D2, Song in. It starts at the same time as D1. It holds Layer 1, the
+   sheet import, and Layer 2, the Mac helper that records and writes notes.
+   Layer 1 comes first, because it needs no AI.
 3. D3, Lesson maker. It waits on D2. It turns a full song into easy lessons.
 4. D4, Practice and feedback. It waits on D1 and D3. Wait mode, the falling
    notes or sheet view, and the score after each lesson.

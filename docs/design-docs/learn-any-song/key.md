@@ -17,5 +17,11 @@ part: key
 | SwiftUI | Apple's tool to build the screens of an app. |
 | Wait mode | The app waits until you press the right key, then moves on. |
 | AI transcription | A model that listens to a recording and writes down the notes. Example: Basic Pitch from Spotify. |
+| Layer 1 | A song comes in as a sheet file that already exists. |
+| Layer 2 | No sheet exists. The Mac helper records the song and a piano model writes the notes. |
+| Mac helper | A small app on the Mac. It records what the Mac plays, with your permission, and makes the master score. |
+| Master score | The full notes of one song, before the app makes it easy. |
+| Piano cover | A recording of one person who plays a song on piano only. |
+| Transkun | An open piano model that writes notes from piano sound. |
 | TestFlight | Apple's way to install a test app on your own device. |
 | Xcode | Apple's app to build iPad and iPhone apps. It runs only on a Mac. |

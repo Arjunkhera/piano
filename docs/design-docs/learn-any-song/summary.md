@@ -12,6 +12,11 @@ smaller designs, D1 to D5. It names the decisions that all five share, and
 the questions that only you can answer. The hardest part is "any song": the
 app needs the correct notes before it can teach them.
 
+Songs come in by two layers. Layer 1: you import a sheet that exists, so the
+notes are exact. Layer 2: no sheet exists. A helper app on your Mac records
+the song as your Mac plays it. A piano model writes the notes. Rules then make
+three levels: beginner, intermediate and advanced.
+
 ```figure
 <svg viewBox="0 0 640 120" role="img" aria-label="Song name, then notes, then lessons, then practice on the keyboard, then feedback">
   <g font-family="var(--mono)" font-size="13" fill="var(--ink)">
@@ -34,8 +39,8 @@ A worked example, from the ask to the feedback:
 
 | Step | Input | Output |
 |---|---|---|
-| Find the notes | "Let It Be" | A note file: 4 minutes, both hands, 1,900 notes |
-| Make it easy | The note file | The right-hand tune only, in C, at 60 beats per minute |
+| Find the notes | No sheet, so Layer 2. You play a YouTube piano cover of "Let It Be". The Mac helper records it | A master score: 4 minutes, both hands, 1,900 notes |
+| Make it easy | The master score, level beginner | The right-hand tune only, in C, at 60 beats per minute |
 | Cut it up | The easy tune | 12 lessons of 4 bars each |
 | Practise | Lesson 1. You press E, then D | The app lights E and waits. D is wrong, so the key shows red and the app waits for E again |
 | Score | 32 key presses | "29 of 32 right. 3 late. Try lesson 1 again at 70 beats per minute?" |
