@@ -4,13 +4,15 @@ import XCTest
 
 final class MIDIFileReaderTests: XCTestCase {
     func testFormat0ReadsNotesTempoMeterAndTitle() throws {
-        let track = name("Ode")
-            + [0x00, 0xFF, 0x51, 0x03, 0x09, 0x27, 0xC0] // 600000 us a beat: 100 bpm
-            + [0x00, 0xFF, 0x58, 0x04, 0x03, 0x02, 0x18, 0x08] // 3/4
-            + on(0, 60) + off(480, 60)
+        let track = join(
+            name("Ode"),
+            [0x00, 0xFF, 0x51, 0x03, 0x09, 0x27, 0xC0], // 600000 us a beat: 100 bpm
+            [0x00, 0xFF, 0x58, 0x04, 0x03, 0x02, 0x18, 0x08], // 3/4
+            on(0, 60), off(480, 60),
             // Running status, and key on with force 0 as key off.
-            + [0x00, 0x90, 64, 80] + vlq(240) + [64, 0]
-            + end()
+            [0x00, 0x90, 64, 80], vlq(240), [64, 0],
+            end()
+        )
         let song = try MIDIFileReader.read(smf(format: 0, ppq: 480, tracks: [track]))
         XCTAssertEqual(song.title, "Ode")
         XCTAssertEqual(song.beatsPerMinute, 100, accuracy: 0.001)
@@ -22,10 +24,10 @@ final class MIDIFileReaderTests: XCTestCase {
     }
 
     func testTwoNoteTracksAreRightThenLeft() throws {
-        let tempo = name("Song") + end()
-        let first = on(0, 72) + off(96, 72) + end()
+        let tempo = join(name("Song"), end())
+        let first = join(on(0, 72), off(96, 72), end())
         // The second track is the left hand even where it plays above middle C.
-        let second = on(0, 64) + off(96, 64) + on(0, 40) + off(96, 40) + end()
+        let second = join(on(0, 64), off(96, 64), on(0, 40), off(96, 40), end())
         let song = try MIDIFileReader.read(smf(format: 1, ppq: 96, tracks: [tempo, first, second]))
         XCTAssertEqual(song.notes.map(\.key), [64, 72, 40])
         XCTAssertEqual(song.notes.map(\.hand), [.left, .right, .left])
@@ -33,13 +35,13 @@ final class MIDIFileReaderTests: XCTestCase {
     }
 
     func testTrackNameSetsTheHand() throws {
-        let left = name("Piano Left Hand") + on(0, 72) + off(96, 72) + end()
+        let left = join(name("Piano Left Hand"), on(0, 72), off(96, 72), end())
         let song = try MIDIFileReader.read(smf(format: 1, ppq: 96, tracks: [left]))
         XCTAssertEqual(song.notes.map(\.hand), [.left])
     }
 
     func testOneTrackSplitsAtMiddleC() throws {
-        let track = on(0, 48) + on(0, 60) + off(96, 48) + off(0, 60) + end()
+        let track = join(on(0, 48), on(0, 60), off(96, 48), off(0, 60), end())
         let song = try MIDIFileReader.read(smf(format: 0, ppq: 96, tracks: [track]))
         XCTAssertEqual(song.notes, [
             Note(key: 48, start: 0, length: 1, hand: .left),
@@ -48,30 +50,32 @@ final class MIDIFileReaderTests: XCTestCase {
     }
 
     func testDrumsAndKeysOffThePianoAreDropped() throws {
-        let track = [0x00, 0x99, 38, 100] + vlq(96) + [0x89, 38, 0] // channel 10
-            + on(0, 10) + off(96, 10) // below A0
-            + on(0, 60) + off(96, 60)
-            + end()
+        let track = join(
+            [0x00, 0x99, 38, 100], vlq(96), [0x89, 38, 0], // channel 10
+            on(0, 10), off(96, 10), // below A0
+            on(0, 60), off(96, 60),
+            end()
+        )
         let song = try MIDIFileReader.read(smf(format: 0, ppq: 96, tracks: [track]))
         XCTAssertEqual(song.notes.map(\.key), [60])
         XCTAssertEqual(song.notes.first?.start, 2)
     }
 
     func testRepeatedKeyClosesTheOldestNoteFirst() throws {
-        let track = on(0, 60) + on(48, 60) + off(48, 60) + off(48, 60) + end()
+        let track = join(on(0, 60), on(48, 60), off(48, 60), off(48, 60), end())
         let song = try MIDIFileReader.read(smf(format: 0, ppq: 96, tracks: [track]))
         XCTAssertEqual(song.notes.map(\.start), [0, 0.5])
         XCTAssertEqual(song.notes.map(\.length), [1, 1])
     }
 
     func testNoteStillDownAtTheEndOfTheTrackEndsThere() throws {
-        let track = on(0, 60) + [0x60, 0xFF, 0x2F, 0x00]
+        let track = join(on(0, 60), [0x60, 0xFF, 0x2F, 0x00])
         let song = try MIDIFileReader.read(smf(format: 0, ppq: 96, tracks: [track]))
         XCTAssertEqual(song.notes.map(\.length), [1])
     }
 
     func testCutShortFileIsDamaged() {
-        let track = on(0, 60) + off(96, 60) + end()
+        let track = join(on(0, 60), off(96, 60), end())
         let bytes = smf(format: 0, ppq: 96, tracks: [track]).dropLast(6)
         XCTAssertThrowsError(try MIDIFileReader.read(Data(bytes))) { error in
             guard case SongImportError.damaged = error else { return XCTFail("\(error)") }
@@ -79,7 +83,7 @@ final class MIDIFileReaderTests: XCTestCase {
     }
 
     func testTimeInFramesIsUnsupported() {
-        let data = smf(format: 0, ppq: 0xE728, tracks: [on(0, 60) + off(96, 60) + end()])
+        let data = smf(format: 0, ppq: 0xE728, tracks: [join(on(0, 60), off(96, 60), end())])
         XCTAssertThrowsError(try MIDIFileReader.read(data)) { error in
             guard case SongImportError.unsupported = error else { return XCTFail("\(error)") }
         }
@@ -88,18 +92,19 @@ final class MIDIFileReaderTests: XCTestCase {
     // MARK: - A small MIDI file writer, for the tests
 
     private func smf(format: UInt16, ppq: UInt16, tracks: [[UInt8]]) -> Data {
-        var bytes = Array("MThd".utf8) + be32(6) + be16(format) + be16(UInt16(tracks.count)) + be16(ppq)
+        var bytes = join(Array("MThd".utf8), be32(6), be16(format), be16(UInt16(tracks.count)), be16(ppq))
         for track in tracks {
-            bytes += Array("MTrk".utf8) + be32(UInt32(track.count)) + track
+            bytes += join(Array("MTrk".utf8), be32(UInt32(track.count)), track)
         }
         return Data(bytes)
     }
 
-    private func on(_ delta: UInt32, _ key: UInt8) -> [UInt8] { vlq(delta) + [0x90, key, 100] }
-    private func off(_ delta: UInt32, _ key: UInt8) -> [UInt8] { vlq(delta) + [0x80, key, 64] }
+    private func join(_ parts: [UInt8]...) -> [UInt8] { parts.flatMap { $0 } }
+    private func on(_ delta: UInt32, _ key: UInt8) -> [UInt8] { join(vlq(delta), [0x90, key, 100]) }
+    private func off(_ delta: UInt32, _ key: UInt8) -> [UInt8] { join(vlq(delta), [0x80, key, 64]) }
     private func end() -> [UInt8] { [0x00, 0xFF, 0x2F, 0x00] }
     private func name(_ text: String) -> [UInt8] {
-        [0x00, 0xFF, 0x03, UInt8(text.utf8.count)] + Array(text.utf8)
+        join([0x00, 0xFF, 0x03, UInt8(text.utf8.count)], Array(text.utf8))
     }
 
     private func vlq(_ value: UInt32) -> [UInt8] {
@@ -113,7 +118,7 @@ final class MIDIFileReaderTests: XCTestCase {
     }
 
     private func be16(_ value: UInt16) -> [UInt8] { [UInt8(value >> 8), UInt8(value & 0xFF)] }
-    private func be32(_ value: UInt32) -> [UInt8] { be16(UInt16(value >> 16)) + be16(UInt16(value & 0xFFFF)) }
+    private func be32(_ value: UInt32) -> [UInt8] { join(be16(UInt16(value >> 16)), be16(UInt16(value & 0xFFFF))) }
 }
 
 final class MusicXMLReaderTests: XCTestCase {
