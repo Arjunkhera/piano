@@ -253,6 +253,16 @@ final class SongImporterTests: XCTestCase {
         }
     }
 
+    func testPracticeSongKeepsTheNotesAndRoundsTheBar() throws {
+        var song = try SongImporter.read(Data(Fixtures.scoreXML.utf8), name: "x")
+        song.beatsPerBar = 3
+        let practice = song.practiceSong(id: "a.json")
+        XCTAssertEqual(practice.id, "a.json")
+        XCTAssertEqual(practice.title, "Test Tune")
+        XCTAssertEqual(practice.beatsPerBar, 3)
+        XCTAssertEqual(practice.notes, song.notes)
+    }
+
     func testSongRoundTripsThroughJSON() throws {
         let song = try SongImporter.read(Data(Fixtures.scoreXML.utf8), name: "x")
         let copy = try JSONDecoder().decode(ImportedSong.self, from: JSONEncoder().encode(song))

@@ -112,7 +112,7 @@ struct ListenCommand {
         print("""
         Done: \(midi.path)
           \(song.notes.count) notes (\(right) right hand, \(song.notes.count - right) left hand), about \(Int(beats.rounded())) beats.
-        Send the file to your iPad (AirDrop or iCloud Drive), then tap Import song in the Piano app.
+        Send the file to your iPad (AirDrop or iCloud Drive), then import it from My songs in the Piano app.
         """)
     }
 

@@ -1,0 +1,30 @@
+name: App build
+
+on:
+  pull_request:
+    paths: ["App/**", "PianoCore/**", ".github/workflows/app.yml"]
+  push:
+    branches: [master]
+    paths: ["App/**", "PianoCore/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: xcodebuild (iOS simulator)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: xcodegen generate
+        working-directory: App
+      # No signing: this check only proves that the app compiles.
+      - run: |
+          xcodebuild build \
+            -project App/Piano.xcodeproj \
+            -scheme Piano \
+            -destination "generic/platform=iOS Simulator" \
+            CODE_SIGNING_ALLOWED=NO \
+            | tail -n 40
+          exit "${PIPESTATUS[0]}"

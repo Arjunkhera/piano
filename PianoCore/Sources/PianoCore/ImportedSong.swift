@@ -76,6 +76,14 @@ public enum SongImporter {
     }
 }
 
+extension ImportedSong {
+    /// The song as the practice screen takes it. D3 makes the levels from
+    /// all of its notes.
+    public func practiceSong(id: String) -> BuiltInSong {
+        BuiltInSong(id: id, title: title, beatsPerBar: max(1, Int(beatsPerBar.rounded())), notes: notes)
+    }
+}
+
 extension Note {
     /// The hand for a note when the file does not say: keys below middle C
     /// go to the left hand.

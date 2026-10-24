@@ -27,7 +27,7 @@ part: stories
   "scenarios": [{
     "name": "US-1",
     "steps": [
-      { "title": "Arjun picks the file", "body": "He taps Songs, then Import song, and picks Ode.mxl.", "active": ["arjun", "pick", "app"] },
+      { "title": "Arjun picks the file", "body": "He taps Import or manage songs, then Import song, and picks Ode.mxl.", "active": ["arjun", "pick", "app"] },
       { "title": "PianoCore reads it", "body": "The bytes start with PK, so it is a zip. It opens the score that container.xml names.", "active": ["read", "core"] },
       { "title": "Hands come from the staves", "body": "Staff 1 is the right hand, staff 2 the left. A tie becomes one long note.", "active": ["song", "core"] },
       { "title": "The app keeps it", "body": "One JSON file in Application Support/Songs. The song shows in the list.", "active": ["keep", "disk", "show"] }
@@ -36,7 +36,7 @@ part: stories
 }
 ```
 
-1. Arjun taps Songs, then Import song, and picks "Ode.mxl".
+1. Arjun taps "Import or manage songs", then Import song, and picks "Ode.mxl".
 2. PianoCore sees a zip, and opens the score inside it.
 3. It reads each note: key, start, length and hand.
 4. The app keeps the song as JSON on the iPad, and lists it.
