@@ -104,7 +104,7 @@ struct ListenCommand {
 
     static func transcribe(audio: URL, name: String, folder: URL, transcriber: Transcriber) throws {
         let midi = folder.appendingPathComponent(name + ".mid")
-        print("Writing the notes with Transkun. A 4-minute song takes about a minute.")
+        print("Writing the notes with Transkun. This takes a few minutes for a 4-minute song.")
         try transcriber.run(audio: audio, midi: midi)
         let song = try SongImporter.read(Data(contentsOf: midi), name: name)
         let right = song.notes.filter { $0.hand == .right }.count
