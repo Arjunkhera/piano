@@ -9,6 +9,7 @@ listed here.
 | Design | What it is |
 |---|---|
 | [Learn any song I ask for on piano](design-docs/learn-any-song/index.md) | The requirements design: five smaller designs, the shared decisions and the open questions. |
+| [D1 Keyboard link](design-docs/keyboard-link/index.md) | The first app piece: read the P-125 over USB and light each key. |
 
 Parts of that design:
 [design.yaml](design-docs/learn-any-song/design.yaml),
@@ -21,3 +22,19 @@ Parts of that design:
 [risks](design-docs/learn-any-song/risks.md),
 [done](design-docs/learn-any-song/done.md),
 [key](design-docs/learn-any-song/key.md).
+
+Parts of the D1 design:
+[design.yaml](design-docs/keyboard-link/design.yaml),
+[summary](design-docs/keyboard-link/summary.md),
+[words](design-docs/keyboard-link/words.md),
+[goals](design-docs/keyboard-link/goals.md),
+[problem](design-docs/keyboard-link/problem.md),
+[actors](design-docs/keyboard-link/actors.md),
+[stories](design-docs/keyboard-link/stories.md),
+[edges](design-docs/keyboard-link/edges.md),
+[records](design-docs/keyboard-link/records.md),
+[risks](design-docs/keyboard-link/risks.md),
+[proof](design-docs/keyboard-link/proof.md),
+[change](design-docs/keyboard-link/change.md),
+[done](design-docs/keyboard-link/done.md),
+[key](design-docs/keyboard-link/key.md).
