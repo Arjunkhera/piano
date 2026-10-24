@@ -10,8 +10,16 @@
 set -euo pipefail
 
 TEAM_ID="${1:?usage: scripts/testflight.sh <TEAM_ID> [--no-upload]}"
-UPLOAD=1
-[[ "${2:-}" == "--no-upload" ]] && UPLOAD=0
+if ! [[ "$TEAM_ID" =~ ^[A-Z0-9]{10}$ ]]; then
+  echo "Give the 10-character Apple team ID, for example ABCDE12345." >&2
+  exit 2
+fi
+# Refuse an unknown flag: a typo of --no-upload must not upload.
+case "${2:-}" in
+  "") UPLOAD=1 ;;
+  --no-upload) UPLOAD=0 ;;
+  *) echo "Unknown option: $2. Use --no-upload or nothing." >&2; exit 2 ;;
+esac
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 # Build outside the repo. A repo under ~/Desktop can sync to iCloud, and iCloud
