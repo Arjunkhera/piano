@@ -26,6 +26,8 @@ public enum MusicXMLReader {
             throw SongImportError.damaged(why)
         }
         guard reader.sawScore else { throw SongImportError.unknownFormat }
+        // Some XML parsers accept a file that stops part way. Check for the end tag.
+        guard reader.closedScore else { throw SongImportError.damaged("the score ends too soon") }
 
         let pitchedParts = reader.parts.filter { !$0.notes.isEmpty }
         var notes: [Note] = []
@@ -76,6 +78,7 @@ public enum MusicXMLReader {
         var tempo: Double?
         var meter: Double?
         var sawScore = false
+        var closedScore = false
         var problem: SongImportError?
 
         private var path: [String] = []
@@ -190,6 +193,8 @@ public enum MusicXMLReader {
                 endNote()
             case "measure":
                 position = max(position, measureEnd)
+            case "score-partwise":
+                closedScore = true
             default:
                 break
             }
