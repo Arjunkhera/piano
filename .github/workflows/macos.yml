@@ -1,0 +1,41 @@
+name: macOS builds
+
+# The Mac helper and the iPad app need Apple's SDKs, so they build on a macOS
+# runner. No signing and no secret: the app builds with signing off.
+on:
+  pull_request:
+    paths: ["App/**", "PianoCore/**", "MacHelper/**", ".github/workflows/macos.yml"]
+  push:
+    branches: [master]
+    paths: ["App/**", "PianoCore/**", "MacHelper/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  mac-helper:
+    name: piano-listen build and tests (macOS)
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - run: swift build --package-path MacHelper
+      - run: swift test --package-path MacHelper
+      - run: swift run --package-path MacHelper piano-listen help
+
+  ios-app:
+    name: iPad app build (no signing)
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: cd App && xcodegen generate
+      - run: |
+          set -o pipefail
+          xcodebuild build \
+            -project App/Piano.xcodeproj \
+            -scheme Piano \
+            -destination "generic/platform=iOS" \
+            CODE_SIGNING_ALLOWED=NO \
+            | tail -n 40
