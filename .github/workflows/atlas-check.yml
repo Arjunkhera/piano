@@ -1,0 +1,42 @@
+# The Atlas repo shape check, in this repo's own CI.
+#
+# It reads the seven files this repo carries, named in atlas.yaml and under
+# atlas/, and reports one state per part: filled, empty, stale, not applicable,
+# or no extractor. It reads this repo only. It takes no secret and opens no
+# network, so it runs on a pull request with read access to the contents.
+#
+# The check is .github/atlas/check.mjs in this repo. It needs no package and no
+# install. Atlas writes both files; do not edit them by hand.
+#
+# It reports in the docs lane. It never fails a code merge.
+#
+# The second checkout is the no-loss rule's base tree. The check scores the base
+# commit and the head commit side by side, and it goes red when a part the base
+# already had is taken away. The base tree lands in .atlas-base, whose name
+# starts with a dot, so no scanner walks into it. If that checkout fails there
+# is nothing to compare, so the step may fail and the check says so and does not
+# gate.
+#
+# Design: the Atlas architecture record, sections 5.2, 6 and rule 7.
+name: atlas-check
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  repo-shape:
+    name: docs · repo shape
+    runs-on: ubuntu-latest
+    # The check reads two directory trees and opens no network. It finishes in
+    # seconds. The bound stops a runner being billed until someone kills it.
+    timeout-minutes: 5
+    steps:
+      # actions/checkout v4.3.1
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: the base commit, for the no-loss rule
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        continue-on-error: true
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: .atlas-base
+      - run: node .github/atlas/check.mjs --base .atlas-base --base-sha ${{ github.event.pull_request.base.sha }}

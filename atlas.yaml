@@ -1,0 +1,20 @@
+# Atlas repo facts. The root file points; it never holds details.
+#
+# The list of files, and what "filled" means for each, is the spec inside
+# .github/atlas/check.mjs in this repo. Atlas writes that file; do not edit it
+# by hand.
+#
+# Kind cli is a placeholder. The app is installed, not deployed, and no kind
+# fits a phone app yet. Change the kind when the stack is chosen.
+spec: 2
+kind: cli
+product: piano
+repo: Arjunkhera/piano
+
+# Each procedure names the skill under .claude/skills/ that carries it.
+# No code exists yet, so no procedure exists yet.
+procedures:
+  test: null
+  release: null
+
+files: {}
