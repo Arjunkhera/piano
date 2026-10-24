@@ -3,6 +3,7 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(KeyboardInput.self) private var keyboard
+    @State private var showSongs = false
 
     var body: some View {
         VStack(spacing: 24) {
@@ -20,6 +21,7 @@ struct ContentView: View {
             .frame(height: 180)
         }
         .padding()
+        .sheet(isPresented: $showSongs) { SongListView() }
     }
 
     private var banner: some View {
@@ -30,6 +32,7 @@ struct ContentView: View {
             if keyboard.pedalDown {
                 Label("Pedal", systemImage: "shoe")
             }
+            Button("Songs", systemImage: "music.note.list") { showSongs = true }
         }
         .font(.headline)
         .padding(12)
