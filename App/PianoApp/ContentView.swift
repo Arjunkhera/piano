@@ -1,8 +1,11 @@
 import PianoCore
 import SwiftUI
 
-/// The home screen: the tunes to practise, and free play.
+/// The home screen: the tunes to practise, the imported songs, and free play.
 struct ContentView: View {
+    @Environment(SongLibrary.self) private var library
+    @State private var showSongs = false
+
     var body: some View {
         NavigationStack {
             List {
@@ -18,6 +21,14 @@ struct ContentView: View {
                         }
                     }
                 }
+                Section("My songs") {
+                    ForEach(library.entries) { entry in
+                        NavigationLink(entry.song.title) {
+                            PracticeView(song: entry.song.practiceSong(id: entry.id))
+                        }
+                    }
+                    Button("Import or manage songs", systemImage: "square.and.arrow.down") { showSongs = true }
+                }
                 Section {
                     NavigationLink("Free play") {
                         FreePlayView()
@@ -25,6 +36,7 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Piano")
+            .sheet(isPresented: $showSongs) { SongListView() }
         }
     }
 }

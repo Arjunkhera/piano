@@ -10,6 +10,7 @@ listed here.
 |---|---|
 | [Learn any song I ask for on piano](design-docs/learn-any-song/index.md) | The requirements design: five smaller designs, the shared decisions and the open questions. |
 | [D1 Keyboard link](design-docs/keyboard-link/index.md) | The first app piece: read the P-125 over USB and light each key. |
+| [D2 Song in](design-docs/song-in/index.md) | Get the notes of a song: import a sheet file, or record the Mac's sound and let Transkun write the notes. |
 | [D3 Lesson maker](design-docs/lesson-maker/index.md) | Rules that make beginner, intermediate and advanced lessons from one master score. |
 | [D4 Practice and feedback](design-docs/practice/index.md) | Wait mode, a mark on each key press, and a score with a tip after each part. |
 
@@ -74,3 +75,18 @@ Parts of the D4 design:
 [change](design-docs/practice/change.md),
 [done](design-docs/practice/done.md),
 [key](design-docs/practice/key.md).
+
+Parts of the D2 design:
+[design.yaml](design-docs/song-in/design.yaml),
+[summary](design-docs/song-in/summary.md),
+[words](design-docs/song-in/words.md),
+[goals](design-docs/song-in/goals.md),
+[actors](design-docs/song-in/actors.md),
+[stories](design-docs/song-in/stories.md),
+[edges](design-docs/song-in/edges.md),
+[records](design-docs/song-in/records.md),
+[risks](design-docs/song-in/risks.md),
+[proof](design-docs/song-in/proof.md),
+[change](design-docs/song-in/change.md),
+[done](design-docs/song-in/done.md),
+[key](design-docs/song-in/key.md).

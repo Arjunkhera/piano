@@ -1,0 +1,26 @@
+name: macOS tests
+
+# The Mac helper needs Apple's SDKs, so it builds on a macOS runner. PianoCore
+# runs here too, with Apple's XML parser. The iPad app builds in app.yml.
+on:
+  pull_request:
+    paths: ["PianoCore/**", "MacHelper/**", ".github/workflows/macos.yml"]
+  push:
+    branches: [master]
+    paths: ["PianoCore/**", "MacHelper/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  mac-helper:
+    name: PianoCore and piano-listen tests (macOS)
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - run: swift test --package-path PianoCore
+      - run: swift build --package-path MacHelper
+      - run: swift test --package-path MacHelper
+      - run: swift run --package-path MacHelper piano-listen help
+
