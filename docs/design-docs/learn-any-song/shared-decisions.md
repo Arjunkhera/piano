@@ -3,8 +3,6 @@ part: shared-decisions
 ---
 # Shared decisions
 
-These are proposals. Each one becomes a decision only when you approve it.
-
 | Decision | Why |
 |---|---|
 | Songs come in by layers. Layer 1: import a sheet (MusicXML or MIDI). Layer 2: a Mac helper records what the Mac plays, and a piano model writes the notes. | Arjun decided this on 24 October 2026. A sheet gives exact notes. YouTube terms forbid a download, and download tools break often. A recording of what the Mac plays avoids both. |
