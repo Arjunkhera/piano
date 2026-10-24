@@ -13,6 +13,7 @@ listed here.
 | [D2 Song in](design-docs/song-in/index.md) | Get the notes of a song: import a sheet file, or record the Mac's sound and let Transkun write the notes. |
 | [D3 Lesson maker](design-docs/lesson-maker/index.md) | Rules that make beginner, intermediate and advanced lessons from one master score. |
 | [D4 Practice and feedback](design-docs/practice/index.md) | Wait mode, a mark on each key press, and a score with a tip after each part. |
+| [D5 Basics course](design-docs/basics/index.md) | Seven short lessons before the first song: middle C, finger numbers, note names, beats, the staff and both hands. |
 
 Parts of that design:
 [design.yaml](design-docs/learn-any-song/design.yaml),
@@ -90,3 +91,21 @@ Parts of the D2 design:
 [change](design-docs/song-in/change.md),
 [done](design-docs/song-in/done.md),
 [key](design-docs/song-in/key.md).
+
+Parts of the D5 design:
+[design.yaml](design-docs/basics/design.yaml),
+[index](design-docs/basics/index.md),
+[summary](design-docs/basics/summary.md),
+[words](design-docs/basics/words.md),
+[goals](design-docs/basics/goals.md),
+[problem](design-docs/basics/problem.md),
+[actors](design-docs/basics/actors.md),
+[stories](design-docs/basics/stories.md),
+[states](design-docs/basics/states.md),
+[edges](design-docs/basics/edges.md),
+[records and the pass rule](design-docs/basics/records.md),
+[risks](design-docs/basics/risks.md),
+[proof](design-docs/basics/proof.md),
+[change](design-docs/basics/change.md),
+[done](design-docs/basics/done.md),
+[key](design-docs/basics/key.md).

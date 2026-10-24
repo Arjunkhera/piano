@@ -1,7 +1,8 @@
 import PianoCore
 import SwiftUI
 
-/// The home screen: the tunes to practise, the imported songs, and free play.
+/// The home screen: the basics course, the tunes to practise, the imported
+/// songs, and free play.
 struct ContentView: View {
     @Environment(SongLibrary.self) private var library
     @State private var showSongs = false
@@ -13,6 +14,11 @@ struct ContentView: View {
                     ConnectionBanner()
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.clear)
+                }
+                Section("Start here") {
+                    NavigationLink("Basics course") {
+                        BasicsView()
+                    }
                 }
                 Section("Practice") {
                     ForEach(BuiltInSong.all) { song in
