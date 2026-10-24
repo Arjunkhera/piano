@@ -11,6 +11,7 @@ listed here.
 | [Learn any song I ask for on piano](design-docs/learn-any-song/index.md) | The requirements design: five smaller designs, the shared decisions and the open questions. |
 | [D1 Keyboard link](design-docs/keyboard-link/index.md) | The first app piece: read the P-125 over USB and light each key. |
 | [D3 Lesson maker](design-docs/lesson-maker/index.md) | Rules that make beginner, intermediate and advanced lessons from one master score. |
+| [D4 Practice and feedback](design-docs/practice/index.md) | Wait mode, a mark on each key press, and a score with a tip after each part. |
 
 Parts of that design:
 [design.yaml](design-docs/learn-any-song/design.yaml),
@@ -55,3 +56,21 @@ Parts of the D3 design:
 [change](design-docs/lesson-maker/change.md),
 [done](design-docs/lesson-maker/done.md),
 [key](design-docs/lesson-maker/key.md).
+
+Parts of the D4 design:
+[design.yaml](design-docs/practice/design.yaml),
+[index](design-docs/practice/index.md),
+[summary](design-docs/practice/summary.md),
+[words](design-docs/practice/words.md),
+[goals](design-docs/practice/goals.md),
+[problem](design-docs/practice/problem.md),
+[actors](design-docs/practice/actors.md),
+[stories](design-docs/practice/stories.md),
+[states](design-docs/practice/states.md),
+[edges](design-docs/practice/edges.md),
+[records and score rules](design-docs/practice/records.md),
+[risks](design-docs/practice/risks.md),
+[proof](design-docs/practice/proof.md),
+[change](design-docs/practice/change.md),
+[done](design-docs/practice/done.md),
+[key](design-docs/practice/key.md).

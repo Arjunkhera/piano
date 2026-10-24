@@ -5,6 +5,8 @@ import SwiftUI
 /// centred on middle C.
 struct PianoKeyboardView: View {
     var heldKeys: Set<UInt8>
+    /// Colours that win over the lit colour, such as the next key in practice.
+    var keyColors: [UInt8: Color] = [:]
     var onTouch: (UInt8, Bool) -> Void
 
     private let whiteWidth: CGFloat = 34
@@ -37,14 +39,15 @@ struct PianoKeyboardView: View {
 
     private func keyShape(_ key: UInt8, black: Bool) -> some View {
         let lit = heldKeys.contains(key)
+        let colored = lit || keyColors[key] != nil
         return RoundedRectangle(cornerRadius: 4)
-            .fill(lit ? Color.accentColor : (black ? Color.black : Color.white))
+            .fill(keyColors[key] ?? (lit ? Color.accentColor : (black ? Color.black : Color.white)))
             .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray.opacity(0.6)))
             .overlay(alignment: .bottom) {
-                if !black && (key % 12 == 0 || lit) {
+                if !black && (key % 12 == 0 || colored) {
                     Text(KeyName.name(of: key))
                         .font(.caption2)
-                        .foregroundStyle(lit ? .white : .gray)
+                        .foregroundStyle(colored ? .white : .gray)
                         .padding(.bottom, 6)
                 }
             }
