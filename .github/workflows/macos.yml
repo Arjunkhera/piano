@@ -14,11 +14,12 @@ permissions:
 
 jobs:
   mac-helper:
-    name: piano-listen build and tests (macOS)
+    name: PianoCore and piano-listen tests (macOS)
     runs-on: macos-15
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+      - run: swift test --package-path PianoCore
       - run: swift build --package-path MacHelper
       - run: swift test --package-path MacHelper
       - run: swift run --package-path MacHelper piano-listen help
