@@ -11,6 +11,7 @@ listed here.
 | [Learn any song I ask for on piano](design-docs/learn-any-song/index.md) | The requirements design: five smaller designs, the shared decisions and the open questions. |
 | [D1 Keyboard link](design-docs/keyboard-link/index.md) | The first app piece: read the P-125 over USB and light each key. |
 | [D2 Song in](design-docs/song-in/index.md) | Get the notes of a song: import a sheet file, or record the Mac's sound and let Transkun write the notes. |
+| [D3 Lesson maker](design-docs/lesson-maker/index.md) | Rules that make beginner, intermediate and advanced lessons from one master score. |
 
 Parts of that design:
 [design.yaml](design-docs/learn-any-song/design.yaml),
@@ -39,6 +40,22 @@ Parts of the D1 design:
 [change](design-docs/keyboard-link/change.md),
 [done](design-docs/keyboard-link/done.md),
 [key](design-docs/keyboard-link/key.md).
+
+Parts of the D3 design:
+[design.yaml](design-docs/lesson-maker/design.yaml),
+[summary](design-docs/lesson-maker/summary.md),
+[words](design-docs/lesson-maker/words.md),
+[goals](design-docs/lesson-maker/goals.md),
+[problem](design-docs/lesson-maker/problem.md),
+[actors](design-docs/lesson-maker/actors.md),
+[stories](design-docs/lesson-maker/stories.md),
+[edges](design-docs/lesson-maker/edges.md),
+[records and level rules](design-docs/lesson-maker/records.md),
+[risks](design-docs/lesson-maker/risks.md),
+[proof](design-docs/lesson-maker/proof.md),
+[change](design-docs/lesson-maker/change.md),
+[done](design-docs/lesson-maker/done.md),
+[key](design-docs/lesson-maker/key.md).
 
 Parts of the D2 design:
 [design.yaml](design-docs/song-in/design.yaml),
