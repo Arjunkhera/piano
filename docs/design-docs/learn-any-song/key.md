@@ -23,5 +23,6 @@ part: key
 | Master score | The full notes of one song, before the app makes it easy. |
 | Piano cover | A recording of one person who plays a song on piano only. |
 | Transkun | An open piano model that writes notes from piano sound. |
+| P-125 | The Yamaha digital piano model that Arjun most likely owns. It has a USB TO HOST port. |
 | TestFlight | Apple's way to install a test app on your own device. |
 | Xcode | Apple's app to build iPad and iPhone apps. It runs only on a Mac. |
