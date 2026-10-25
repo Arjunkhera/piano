@@ -1,8 +1,8 @@
 import PianoCore
 import SwiftUI
 
-/// The home screen: the basics course, the tunes to practise, the imported
-/// songs, and free play.
+/// The home screen: the basics course, the tunes to practise, the classical
+/// pieces, the imported songs, and free play.
 struct ContentView: View {
     @Environment(SongLibrary.self) private var library
     @State private var showSongs = false
@@ -21,9 +21,21 @@ struct ContentView: View {
                     }
                 }
                 Section("Practice") {
-                    ForEach(BuiltInSong.all) { song in
+                    ForEach(BuiltInSong.all.filter { $0.composer == nil }) { song in
                         NavigationLink(song.title) {
                             PracticeView(song: song)
+                        }
+                    }
+                }
+                Section("Classical") {
+                    ForEach(BuiltInSong.classical) { song in
+                        NavigationLink {
+                            PracticeView(song: song)
+                        } label: {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(song.title)
+                                Text(song.composer ?? "").font(.subheadline).foregroundStyle(.secondary)
+                            }
                         }
                     }
                 }
