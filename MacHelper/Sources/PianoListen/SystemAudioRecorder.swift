@@ -88,12 +88,12 @@ final class SystemAudioRecorder: NSObject, SCStreamOutput, SCStreamDelegate {
         stream = nil
         // Let the queue finish the last buffer before the file closes.
         queue.sync {}
-        lock.lock()
-        defer { lock.unlock() }
-        file = nil
-        if let writeError { throw writeError }
-        guard frames > 0, peak > 0.0001 else { throw Failure.noSound }
-        return Double(frames) / sampleRate
+        return try lock.withLock {
+            file = nil
+            if let writeError { throw writeError }
+            guard frames > 0, peak > 0.0001 else { throw Failure.noSound }
+            return Double(frames) / sampleRate
+        }
     }
 
     /// Seconds recorded so far, and the loudest sample so far (0 to 1).
