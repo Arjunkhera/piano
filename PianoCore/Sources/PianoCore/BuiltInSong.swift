@@ -5,11 +5,14 @@ public struct BuiltInSong: Identifiable, Sendable {
     public var id: String
     public var title: String
     public var beatsPerBar: Int
-    /// The master score: the right-hand tune, in C major.
+    /// The master score. The first tunes are the right hand only, in C
+    /// major. The classical pieces have both hands.
     public var notes: [Note]
+    /// Who wrote the music, when it is a known composer.
+    public var composer: String? = nil
 
-    /// Every built-in tune.
-    public static let all: [BuiltInSong] = [twinkle, odeToJoy, cMajorScale]
+    /// Every built-in tune: the first tunes, then the classical pieces.
+    public static let all: [BuiltInSong] = [twinkle, odeToJoy, cMajorScale] + classical
 
     /// "Twinkle, Twinkle, Little Star", a folk tune.
     public static let twinkle = BuiltInSong(
